@@ -1,3 +1,6 @@
+import json
+
+
 class Category:
     """Класс для категории"""
     category_name: str
@@ -28,3 +31,30 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
+
+
+def get_json_data(path):
+    """Выгружает данные товаров из json файла"""
+    with open(path, 'r', encoding='utf-8') as json_file:
+        products_data = json.load(json_file)
+    return products_data
+
+
+def create_category_classes(products_data):
+    """Создает классы категорий"""
+    categories = []
+    for category_data in products_data:
+        category = Category(category_data.get('name'), category_data.get('description'), category_data.get('products'))
+        categories.append(category)
+    return categories
+
+
+def create_product_classes(product_data):
+    """Создает классы продуктов"""
+    products_list = []
+    for products in product_data:
+        list_of_products = products.get('products')
+        for product_info in list_of_products:
+            product = Product(product_info.get('name'), product_info.get('description'), product_info.get('price'), product_info.get('quantity'))
+            products_list.append(product)
+    return products_list
