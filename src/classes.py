@@ -27,7 +27,7 @@ class Category:
     def list_of_products(self):
         """Геттер для получения списка товаров в формате: 'Продукт, 80 руб. Остаток: 15 шт."""
         formatted_products = [
-            f"{product.product_name}, {product.price} руб. Остаток: {product.quantity} шт."
+            f"{Product.product_name}, {Product.price} руб. Остаток: {Product.quantity} шт."
             for product in self.__products
         ]
         return "\n".join(formatted_products)
