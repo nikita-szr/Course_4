@@ -14,14 +14,27 @@ class Category:
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.category_name = category_name
         self.description = description
-        self.products = products
+        self.__products = products
         Category.category_count += 1
         Category.unique_products += len(products)
+
+    def add_product(self, product):
+        """Метод для добавления товара в категорию."""
+        self.__products.append(product)
+        Category.unique_products += 1
+
+    @property
+    def list_of_products(self):
+        """Геттер для получения списка товаров в формате: 'Продукт, 80 руб. Остаток: 15 шт."""
+        formatted_products = [
+            f"{product.product_name}, {product.price} руб. Остаток: {product.quantity} шт."
+            for product in self.__products
+        ]
+        return "\n".join(formatted_products)
 
 
 class Product:
     """Класс для продукта"""
-
     product_name: str
     description: str
     price: float
@@ -31,8 +44,42 @@ class Product:
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.product_name = product_name
         self.description = description
-        self.price = price
+        self._price = price
         self.quantity = quantity
+
+    @classmethod
+    def new_product(cls, product_data: dict, products_list: list):
+        """Метод класса для создания нового продукта. При наличии дубликата обновляет количество и цену"""
+        product_name = product_data['product_name']
+        description = product_data['description']
+        price = product_data['price']
+        quantity = product_data['quantity']
+
+        for product in products_list:
+            if product.product_name == product_name:
+                product.quantity += quantity
+                product.price = max(product.price, price)
+                return product
+
+        new_product = cls(product_name, description, price, quantity)
+        products_list.append(new_product)
+        return new_product
+
+    @property
+    def product_price(self):
+        """Геттер для получения цены"""
+        return self.price
+
+    @product_price.setter
+    def product_price(self, new_price):
+        """Сеттер для установки цены с проверкой > 0"""
+        if new_price > 0:
+            if self.price > new_price:
+                user_agreement = input(f'Понизить цену? "y" - если да, "n" - если нет :')
+                if user_agreement.lower() == "y":
+                    self._price = new_price
+        else:
+            print("Цена введена некорректная")
 
 
 def get_json_data(path):
