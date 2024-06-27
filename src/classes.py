@@ -75,7 +75,7 @@ class Product:
         """Сеттер для установки цены с проверкой > 0"""
         if new_price > 0:
             if self.price > new_price:
-                user_agreement = input(f'Понизить цену? "y" - если да, "n" - если нет :')
+                user_agreement = input('Понизить цену? "y" - если да, "n" - если нет :')
                 if user_agreement.lower() == "y":
                     self._price = new_price
         else:
