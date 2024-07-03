@@ -97,6 +97,22 @@ class Product:
         return (self._price * self.quantity) + (other.price * other.quantity)
 
 
+class CategoryIterator:
+    """Класс для итерации по товарам в категории"""
+
+    def __init__(self, category):
+        """Инициализация итератора с категорией"""
+        self._category = category
+        self._index = 0
+
+    def __iter__(self):
+        """Возвращает итератор"""
+        return self
+
+    def __next__(self):
+        pass
+
+
 def get_json_data(path):
     """Выгружает данные товаров из json файла"""
     with open(path, "r", encoding="utf-8") as json_file:
