@@ -29,7 +29,7 @@ class Category:
     def list_of_products(self):
         """Геттер для получения списка товаров в формате: 'Продукт, 80 руб. Остаток: 15 шт."""
         formatted_products = [
-            f"{product.product_name}, {product.price} руб. Остаток: {product.quantity} шт."
+            f"{product.product_name}, {product._price} руб. Остаток: {product.quantity} шт."
             for product in self.__products
         ]
         return "\n".join(formatted_products)
@@ -98,7 +98,7 @@ class Product:
         """Магический метод для сложения продуктов по правилу: цена * количество"""
         if type(self) is not type(other):
             raise TypeError
-        return self._price * self.quantity + other.price * other.quantity
+        return self._price * self.quantity + other._price * other.quantity
 
 
 class CategoryIterator:
