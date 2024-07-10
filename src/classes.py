@@ -94,7 +94,9 @@ class Product:
 
     def __add__(self, other):
         """Магический метод для сложения продуктов по правилу: цена * количество"""
-        return (self._price * self.quantity) + (other.price * other.quantity)
+        if type(self) is not type(other):
+            raise TypeError
+        return self._price * self.quantity + other.price * other.quantity
 
 
 class CategoryIterator:
@@ -114,15 +116,17 @@ class CategoryIterator:
 
 
 class Smartphones(Product):
+    """Класс для смартфонов"""
     def __init__(self, product_name, description, price, quantity, performance, model, storage, color):
         super().__init__(product_name, description, price, quantity)
-        self.perfomance = performance
+        self.performance = performance
         self.model = model
         self.storage = storage
         self.color = color
 
 
 class Lawngrass(Product):
+    """Класс для газонной травы"""
     def __init__(self, product_name, description, price, quantity, country, germination, color):
         super().__init__(product_name, description, price, quantity)
         self.country = country
