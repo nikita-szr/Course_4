@@ -20,6 +20,8 @@ class Category:
 
     def add_product(self, product):
         """Метод для добавления товара в категорию."""
+        if not isinstance(product, Product):
+            raise TypeError
         self.__products.append(product)
         Category.unique_products += 1
 
@@ -27,7 +29,7 @@ class Category:
     def list_of_products(self):
         """Геттер для получения списка товаров в формате: 'Продукт, 80 руб. Остаток: 15 шт."""
         formatted_products = [
-            f"{Product.product_name}, {Product.price} руб. Остаток: {Product.quantity} шт."
+            f"{product.product_name}, {product.price} руб. Остаток: {product.quantity} шт."
             for product in self.__products
         ]
         return "\n".join(formatted_products)
