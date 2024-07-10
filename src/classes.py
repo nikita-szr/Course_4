@@ -32,6 +32,14 @@ class Category:
         ]
         return "\n".join(formatted_products)
 
+    def __len__(self):
+        """Метод для получения количества продуктов в категории."""
+        return sum(product.quantity for product in self.__products)
+
+    def __str__(self):
+        """Строковое отображение категории."""
+        return f"{self.category_name}, количество продуктов: {len(self)} шт."
+
 
 class Product:
     """Класс для продукта"""
@@ -80,6 +88,29 @@ class Product:
                     self._price = new_price
         else:
             print("Цена введена некорректная")
+
+    def __str__(self):
+        return f'{self.product_name}, {self.price} руб. Остаток: {self.quantity} шт.'
+
+    def __add__(self, other):
+        """Магический метод для сложения продуктов по правилу: цена * количество"""
+        return (self._price * self.quantity) + (other.price * other.quantity)
+
+
+class CategoryIterator:
+    """Класс для итерации по товарам в категории"""
+
+    def __init__(self, category):
+        """Инициализация итератора с категорией"""
+        self._category = category
+        self._index = 0
+
+    def __iter__(self):
+        """Возвращает итератор"""
+        return self
+
+    def __next__(self):
+        pass
 
 
 def get_json_data(path):
