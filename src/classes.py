@@ -113,6 +113,23 @@ class CategoryIterator:
         pass
 
 
+class Smartphones(Product):
+    def __init__(self, product_name, description, price, quantity, performance, model, storage, color):
+        super().__init__(product_name, description, price, quantity)
+        self.perfomance = performance
+        self.model = model
+        self.storage = storage
+        self.color = color
+
+
+class Lawngrass(Product):
+    def __init__(self, product_name, description, price, quantity, country, germination, color):
+        super().__init__(product_name, description, price, quantity)
+        self.country = country
+        self.germination = germination
+        self.color = color
+
+
 def get_json_data(path):
     """Выгружает данные товаров из json файла"""
     with open(path, "r", encoding="utf-8") as json_file:
