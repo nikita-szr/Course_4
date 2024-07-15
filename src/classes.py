@@ -1,8 +1,19 @@
 import json
 from abc import ABC, abstractmethod
 
+class Mixin:
+    """Миксин для вывода информации о созданном объекте"""
 
-class Category:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(f'Создан объект: {self}')
+
+    def __repr__(self):
+        attributes = [f'{key}: {value}' for key, value in self.__dict__.items()]
+        return f"Создан объект {self.__class__.__name__} с атрибутами {', '.join(attributes)}"
+
+
+class Category(Mixin):
     """Класс для категории"""
 
     category_name: str
@@ -13,6 +24,7 @@ class Category:
 
     def __init__(self, category_name, description, products):
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
+        super().__init__(category_name, description, products)
         self.category_name = category_name
         self.description = description
         self.__products = products
@@ -73,7 +85,7 @@ class Products(ABC):
         pass
 
 
-class Product(Products):
+class Product(Mixin, Products):
     """Класс для продукта"""
     product_name: str
     description: str
@@ -81,11 +93,7 @@ class Product(Products):
     quantity: int
 
     def __init__(self, product_name, description, price, quantity):
-        """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
-        self.product_name = product_name
-        self.description = description
-        self._price = price
-        self.quantity = quantity
+        super().__init__(product_name, description, price, quantity)
 
     @classmethod
     def new_product(cls, product_data: dict, products_list: list):
