@@ -1,6 +1,7 @@
 import json
 from abc import ABC, abstractmethod
 
+
 class Mixin:
     """Миксин для вывода информации о созданном объекте"""
 
