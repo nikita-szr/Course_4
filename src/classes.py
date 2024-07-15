@@ -25,7 +25,6 @@ class Category:
 
     def __init__(self, category_name, description, products):
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
-        super().__init__()
         self.category_name = category_name
         self.description = description
         self.__products = products
