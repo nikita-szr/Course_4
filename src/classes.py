@@ -1,4 +1,5 @@
 import json
+from abc import ABC, abstractmethod
 
 
 class Category:
@@ -43,7 +44,36 @@ class Category:
         return f"{self.category_name}, количество продуктов: {len(self)} шт."
 
 
-class Product:
+class Products(ABC):
+    """Абстрактный класс для продуктов"""
+
+    @abstractmethod
+    def __init__(self, product_name, description, price, quantity):
+        self.product_name = product_name
+        self.description = description
+        self._price = price
+        self.quantity = quantity
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        pass
+
+    @property
+    @abstractmethod
+    def product_price(self):
+        pass
+
+    @product_price.setter
+    @abstractmethod
+    def product_price(self, new_price):
+        pass
+
+
+class Product(Products):
     """Класс для продукта"""
     product_name: str
     description: str
