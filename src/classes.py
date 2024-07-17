@@ -35,6 +35,8 @@ class Category:
         """Метод для добавления товара в категорию."""
         if not isinstance(product, Product):
             raise TypeError("Товар должен быть экземпляром класса Product")
+        if product.quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.__products.append(product)
         Category.unique_products += 1
 
@@ -102,6 +104,9 @@ class Product(Mixin, Products):
         description = product_data['description']
         price = product_data['price']
         quantity = product_data['quantity']
+
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
         for product in products_list:
             if product.product_name == product_name:
